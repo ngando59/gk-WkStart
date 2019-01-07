@@ -1,4 +1,4 @@
-package com.ngando.gestibank.home.controller;
+package com.ngando.gestibank.user.controller;
 
 import java.io.IOException;
 
@@ -10,10 +10,10 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class HomeServlet
+ * Servlet implementation class LogoutServlet
  */
-@WebServlet("/home")
-public class HomeServlet extends HttpServlet {
+@WebServlet("/logout")
+public class LogoutServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	/**
@@ -24,15 +24,8 @@ public class HomeServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		HttpSession session = request.getSession();
-		String user = (String) session.getAttribute("user");
-		request.setAttribute("user", user);
-		if (user == null) {
-			request.getServletContext().getRequestDispatcher("/WEB-INF/view/user/login.html").forward(request,
-					response);
-		} else {
-			request.getServletContext().getRequestDispatcher("/WEB-INF/view/user/welcome.html").forward(request,
-					response);
-		}
+		session.removeAttribute("user");
+		request.getServletContext().getRequestDispatcher("/WEB-INF/view/user/logout.jsp").forward(request, response);
 	}
 
 	/**

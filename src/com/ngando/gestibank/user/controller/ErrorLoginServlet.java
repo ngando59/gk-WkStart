@@ -23,7 +23,7 @@ public class ErrorLoginServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		request.getServletContext().getRequestDispatcher("/WEB-INF/view/user/errorLogin.html").forward(request,
+		request.getServletContext().getRequestDispatcher("/WEB-INF/view/user/errorLogin.jsp").forward(request,
 				response);
 	}
 

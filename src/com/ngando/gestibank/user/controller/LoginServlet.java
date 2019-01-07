@@ -7,6 +7,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 /**
  * Servlet implementation class LoginServlet
@@ -22,7 +23,14 @@ public class LoginServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getServletContext().getRequestDispatcher("/WEB-INF/view/user/login.html").forward(request, response);
+		HttpSession session = request.getSession();
+		String user = (String) session.getAttribute("user");
+		request.setAttribute("user", user);
+		if (user == null) {
+			request.getServletContext().getRequestDispatcher("/WEB-INF/view/user/login.jsp").forward(request, response);
+		} else {
+			response.sendRedirect("/GestiBank/welcome");
+		}
 	}
 
 	/**
@@ -32,12 +40,12 @@ public class LoginServlet extends HttpServlet {
 	@Override
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		String login = request.getParameter("login");
 		String password = request.getParameter("password");
-		if ((login.equals("ngando")) && (password.equals("1234"))) {
-			request.setAttribute("user", login);
-			response.sendRedirect("/GestiBank");
+		if (password.equals("1234")) {
+			HttpSession session = request.getSession(true);
+			session.setAttribute("user", login);
+			response.sendRedirect("/GestiBank/welcome");
 		} else {
 			response.sendRedirect("/GestiBank/errorLogin");
 		}
